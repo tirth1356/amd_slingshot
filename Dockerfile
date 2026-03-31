@@ -18,11 +18,11 @@ RUN npm run build
 # Stage 2: Node.js backend + serve frontend
 # =============================================
 FROM node:20-alpine
-WORKDIR /app
+WORKDIR /app/backend
 COPY backend/package*.json ./
 RUN npm ci --only=production --silent
 COPY backend/ .
-COPY --from=frontend-build /app/frontend/dist ./frontend/dist
+COPY --from=frontend-build /app/frontend/dist ../frontend/dist
 
 ENV NODE_ENV=production
 ENV PORT=8080
