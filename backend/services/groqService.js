@@ -95,9 +95,14 @@ Return ONLY this JSON structure, no explanation, no markdown:
     max_tokens: 4000
   });
 
-  const text = response.choices[0]?.message?.content || '{}';
-  const clean = text.replace(/```json|```/g, '').trim();
-  return JSON.parse(clean);
+  try {
+    const text = response.choices[0]?.message?.content || '{}';
+    const clean = text.replace(/```json|```/g, '').trim();
+    return JSON.parse(clean);
+  } catch (err) {
+    console.error('Groq JSON Parse Error:', err);
+    throw new Error('Failed to generate diet plan');
+  }
 }
 
 /**
@@ -170,8 +175,13 @@ Return ONLY this JSON (no markdown):
     max_tokens: 800
   });
 
-  const text = response.choices[0]?.message?.content || '{}';
-  return JSON.parse(text.replace(/```json|```/g, '').trim());
+  try {
+    const text = response.choices[0]?.message?.content || '{}';
+    return JSON.parse(text.replace(/```json|```/g, '').trim());
+  } catch (err) {
+    console.error('Groq JSON Parse Error:', err);
+    throw new Error('Failed to generate insights');
+  }
 }
 
 module.exports = { generateDietPlan, chatWithAI, generateWeeklyInsights };
