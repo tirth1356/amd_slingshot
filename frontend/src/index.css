@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-base:        #05050f;
+  --orb-teal:       #0d9488;
+  --orb-violet:     #6d28d9;
+  --orb-green:      #065f46;
+  --glass-bg:       rgba(255,255,255,0.05);
+  --glass-border:   rgba(255,255,255,0.10);
+  --glass-hover:    rgba(255,255,255,0.08);
+  --accent:         #10b981;
+  --accent-dark:    #059669;
+  --accent-violet:  #7c3aed;
+  --text-1:         #ecfdf5;
+  --text-2:         rgba(236,253,245,0.65);
+  --text-3:         rgba(236,253,245,0.35);
+  --danger:         #f87171;
+  --warning:        #fbbf24;
+  --radius:         18px;
+  --blur:           blur(18px);
+  --shadow:         0 8px 32px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-base);
+  color: var(--text-1);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+h1,h2,h3,h4,h5 { font-family: 'Syne', sans-serif; }
+
+/* Custom Glass Utilities */
+@layer components {
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: var(--blur);
+    -webkit-backdrop-filter: var(--blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .glass:hover {
+    background: var(--glass-hover);
+  }
+
+  .btn-accent {
+    background: linear-gradient(135deg, var(--accent), var(--accent-violet));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .btn-accent:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(16,185,129,0.35);
+  }
+
+  .btn-accent:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-1);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 11px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .btn-ghost:hover {
+    background: var(--glass-hover);
+    border-color: var(--accent);
+  }
+
+  input, select, textarea {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: var(--text-1);
+    padding: 12px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    width: 100%;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+  
+  select option {
+    background: var(--bg-base);
+    color: var(--text-1);
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(16,185,129,0.15);
+  }
+}
+
+/* Orbs */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.30;
+  pointer-events: none;
+  animation: orbDrift 20s ease-in-out infinite;
+  z-index: 0;
+}
+.orb-1 { width:600px;height:600px;background:var(--orb-teal);   top:-120px;left:-120px;animation-delay:0s; }
+.orb-2 { width:500px;height:500px;background:var(--orb-violet); top:35%;right:-80px;  animation-delay:-7s; }
+.orb-3 { width:380px;height:380px;background:var(--orb-green);  bottom:-80px;left:32%;animation-delay:-14s; }
+
+@keyframes orbDrift {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%      { transform: translate(35px,-25px) scale(1.04); }
+  66%      { transform: translate(-25px,35px) scale(0.97); }
+}
+
+/* Transitions */
+.page-enter { opacity: 0; transform: translateY(10px); }
+.page-active { opacity: 1; transform: translateY(0); transition: all 0.4s ease; }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-3); }
